@@ -8,18 +8,30 @@
 }
 
 :root {
+  --hue: 300;
+
   /* configuração na raiz da pagina */
-  --primary-color: hsl(170, 100%, 26%);
+  --primary-color: hsl(var(--hue), 100%, 26%);
   --headline: hsl(210, 11%, 15%);
   --paragraph: hsl(210, 9%, 31%);
 
   --brand-beige: hsl(39, 100%, 97%);
-  --brand-light: hsl(148, 23%, 89%);
+  --brand-light: hsl(calc(var(--hue) - 22), 23%, 89%);
+  --brand-light:hsl(180, 14%, 97%)
+  --brand-dark: hsl(var(--hue), 100%, 14%);
+
+  --bg-light: hsl(180, 14%, 97%);
 
   font-size: 62.5%; /* 1rem = 10px */
 
   --nav-height: 7.2rem;
 }
+
+html {
+  /* suavisa a rolagem da pagina*/
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   width: 100%;
@@ -32,11 +44,13 @@ body {
   font-size: 1.6rem;
   text-align: center;
 
+  background: var(--bg-light);
+
   overflow: overlay; /* Overlay sobrepoe a barra de rolagem*/
 }
 
 .wrapper {
-  width: 37.5rem;
+  width: min(50rem, 100%);
   margin-inline: auto;
   padding-inline: 2.4rem;
 }
@@ -44,55 +58,56 @@ body {
 ul {
   list-style: none;
 }
-/* =======================HEADER====================================*/
 
-header {
-  margin-top: calc(4.1rem + var(--nav-height));
-  /* Soma os espaço */
+img {
+  max-width: 100%;
 }
 
-header::before {
-  /* Antes do conteudo */
-  content: '';
-  width: 100%;
-  height: calc(108rem + var(--nav-height));
-  background-color: var(--brand-light);
-  display: block;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
+section {
+  padding-block: 10rem;
 }
 
-header h4 {
-  font-size: 1.9rem;
+section h4 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 150%;
   color: var(--primary-color);
   margin-bottom: 1.6rem;
+
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
 }
 
-header h1 {
+section h1 {
   font-size: 3.4rem;
-  color: var(--headline);
+  font-weight: 700;
   line-height: 130%;
+  color: var(--headline);
 
   margin-bottom: 2.4rem;
 }
 
-header p {
-  font-size: 1.8rem;
-  line-height: 150%;
-  font-weight: 400px;
-  color: var(--paragraph);
-  margin-bottom: 3.2rem;
+section h2 {
+  font-size: 3rem;
+  line-height: 3.9rem;
+  color: var(--headline);
 }
-header button {
+
+section .content p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--paragraph);
+}
+
+.button {
   background: var(--primary-color);
   border-radius: 4rem;
   border: none;
-  margin-bottom: 6rem;
-  height: 6.2rem;
-  width: 26.3rem;
+
+  padding: 1.6rem 3.2rem;
+  width: fit-content; /* A largura vai ser adaptada ao conteudo do button */
+
   color: white;
   text-transform: uppercase;
   font-size: 1.4rem;
@@ -102,60 +117,56 @@ header button {
   align-items: center;
   justify-content: center;
   gap: 1.6rem;
+  text-decoration: none;
 
-  margin-left: auto;
-  margin-right: auto;
+  transition: background 300ms;
 }
 
-header img {
-  display: block;
-  margin-inline: auto;
-  width: 26.4rem;
-  height: 34.2rem;
-  object-position: 0 2rem;
+.button:hover {
+  background-color: var(--brand-dark);
 }
 
-.stats {
-  width: 32.7rem;
-  padding-block: 4rem;
-
-  margin-inline: auto;
-
-  background: var(--brand-beige);
-  border: 1px solid var(--brand-light);
-  border-radius: 0.6rem;
-
+.social-links {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 6rem;
-
-  padding-top: 4rem;
+  gap: 3.2rem;
 }
 
-.stat p {
-  margin-bottom: 0;
-  color: var(--primary-color);
+/* =======================CUSTOM COLORS====================================*/
+
+#services .card circle {
+  fill: var(--brand-light);
+}
+button.open-menu path[stroke*='#00856F'],
+#contact li path {
+  stroke: var(--primary-color);
 }
 
-.stat h3 {
-  color: var(--headline);
-  font-size: 4.8rem;
-  font-weight: 700;
-  line-height: 130%;
-  margin-bottom: 0.4rem;
+#navegador .logo path[fill*='#00856F'],
+#BackToTopButton circle {
+  fill: var(--primary-color);
+} /* Verifica algum parametro para aplicar o efeito*/
+
+body.menu-expanded #navegador .logo path,
+#navegador.scroll .logo path {
+  fill: white;
 }
 
+#navegador.scroll button.open-menu path[stroke*='#00856F'] {
+  stroke: white;
+}
 /* =======================NAVIGATION====================================*/
 nav {
   display: flex;
+
   height: var(--nav-height);
 
-  padding: 1.6rem 2.4rem;
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100vw;
+
+  z-index: 100;
 }
 
 nav .wrapper {
@@ -166,15 +177,6 @@ nav .wrapper {
 
 nav.scroll {
   background: var(--primary-color);
-  width: 100vw;
-}
-
-nav.scroll svg:nth-child(1) path {
-  fill: white;
-}
-
-nav.scroll svg:nth-child(2) path {
-  stroke: white;
 }
 
 nav button {
@@ -183,6 +185,10 @@ nav button {
   cursor: pointer;
 }
 
+nav .menu,
+nav .close-menu {
+  position: fixed;
+}
 /* =======================MENU-EXPANDED=============================*/
 .menu,
 .close-menu,
@@ -200,15 +206,19 @@ body.menu-expanded .close-menu {
 body.menu-expanded > :not(nav) {
   /* > significa pegar do primeiro nivel e * significa pegar todos do primeiro nivel 
   e :not(nav) é aplicar excessão  */
-  display: none;
+  visibility: hidden;
 }
 
 body.menu-expanded {
   overflow: hidden; /* some com a barra de rolagem*/
 }
 
+.menu {
+  transform: translateY(100%);
+  /* Joga o menu para baixo ficando fora da tela*/
+}
+
 body.menu-expanded .menu {
-  position: fixed;
   top: 0;
   left: 0;
   background: var(--primary-color);
@@ -217,10 +227,10 @@ body.menu-expanded .menu {
   height: 100vh;
 
   padding-top: var(--nav-height);
-}
 
-body.menu-expanded nav {
-  position: relative;
+  transition: transform 400ms;
+  /* vai subir o menu fazendo ele parece mais vivo*/
+  transform: translateY(0);
 }
 
 .menu ul:nth-child(1) {
@@ -240,13 +250,6 @@ body.menu-expanded nav {
   text-decoration: none;
 }
 
-.social-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3.2rem;
-}
-
 .menu .button {
   background: #ffffff;
   border-radius: 4rem;
@@ -264,6 +267,13 @@ body.menu-expanded nav {
   margin-bottom: 8rem;
 }
 
+.menu .button:hover {
+  background-color: var(--primary-color);
+  color: white;
+
+  filter: brightness(1.3);
+}
+
 body.menu-expanded .logo,
 body.menu-expanded .close-menu {
   position: relative;
@@ -275,4 +285,311 @@ body.menu-expanded .logo path {
 
 body.menu-expanded .logo path {
   stroke: white;
+}
+
+/* =======================HOME====================================*/
+
+#home {
+  padding-top: calc(4.1rem + var(--nav-height));
+  /* Soma os espaço */
+}
+
+#home::before {
+  /* Antes do conteudo */
+  content: '';
+  width: 100%;
+  height: calc(108rem + var(--nav-height));
+  background-color: var(--brand-light);
+  display: block;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#home p {
+  margin-bottom: 3.2rem;
+}
+
+#home img {
+  display: block;
+  margin-inline: auto;
+  width: 26.4rem;
+  height: 34.2rem;
+  object-position: 0 2rem;
+}
+
+#home .button {
+  margin-inline: auto;
+  margin-bottom: 6rem;
+}
+
+#home .stats {
+  width: 100%;
+  padding-block: 4rem;
+
+  margin-inline: auto;
+
+  background: var(--brand-beige);
+  border: 1px solid var(--brand-light);
+  border-radius: 0.6rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6rem;
+
+  padding-top: 4rem;
+}
+
+#home .stat p {
+  margin-bottom: 0;
+  color: var(--primary-color);
+}
+
+#home .stat h3 {
+  color: var(--headline);
+  font-size: 4.8rem;
+  font-weight: 700;
+  line-height: 130%;
+  margin-bottom: 0.4rem;
+}
+
+/* =======================Services=============================*/
+
+#services header h2 {
+  margin-bottom: 6rem;
+}
+#services .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+#services .card {
+  padding: 2.4rem;
+  text-align: left;
+
+  /* Secondary Colors/White */
+
+  background: #ffffff;
+  /* Primary Colors/brand-green-light */
+
+  border: var(--brand-light);
+  border-radius: 6px;
+}
+
+#services .card h3 {
+  margin-block: 1.6rem;
+}
+
+/* =======================About=============================*/
+#about {
+  text-align: left;
+  background: var(--brand-beige);
+}
+
+#about header h2 {
+  margin-bottom: 2.4rem;
+}
+#about .content p {
+  margin-bottom: 6rem;
+}
+
+/* =======================Contact=============================*/
+#contact {
+  text-align: left;
+}
+
+#contact ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+
+  margin-block: 3.2rem;
+}
+
+#contact ul li {
+  display: flex; /* Display Flex e align itens center para alinhar os itens */
+  align-items: center;
+  gap: 0.8rem;
+}
+
+#contact .button {
+  margin-bottom: 6rem;
+}
+
+/* =======================Footer====================================*/
+
+footer {
+  background-color: var(--primary-color);
+  padding-block: 6rem;
+
+  text-align: left;
+}
+
+footer .logo {
+  display: inline-block;
+  margin-bottom: 2.4rem; /* Display inline não aceita margin bottom e afins */
+}
+
+footer .logo svg {
+  width: 23.6rem;
+  height: 3.1rem;
+}
+
+footer .logo path {
+  fill: white;
+}
+
+footer p {
+  color: var(--brand-beige);
+  line-height: 2;
+  margin-bottom: 3.2rem;
+}
+
+footer .social-links {
+  justify-content: flex-start;
+}
+
+/* =======================BackToTop====================================*/
+
+#BackToTopButton {
+  position: fixed;
+  bottom: 1rem;
+  right: 2.5rem;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(100%);
+  transition: 200ms;
+}
+
+#BackToTopButton.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* =======================RESPONSIVIDADE====================================*/
+
+@media (min-width: 1024px) {
+  /* =======================GERAL====================================*/
+  .wrapper {
+    width: min(112rem, 100%);
+  }
+
+  /* =======================NAVIGATION====================================*/
+
+  /* RESET */
+  nav#navegador .wrapper * {
+    margin: 0;
+    padding: 0;
+    visibility: initial;
+    display: initial;
+    opacity: initial;
+    flex-direction: initial;
+    position: initial;
+    font-size: initial;
+    transform: initial;
+  }
+  nav#navegador .close-menu,
+  nav#navegador .open-menu,
+  nav#navegador .social-links {
+    display: none;
+  }
+
+  nav#navegador .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+  }
+
+  nav#navegador .menu ul:nth-child(1) {
+    display: flex;
+    gap: 3.2rem;
+  }
+
+  nav#navegador .menu ul li a {
+    color: var(--primary-color);
+    opacity: 0.7;
+  }
+
+  nav#navegador .menu a.button {
+    box-sizing: border-box;
+
+    /* Auto layout */
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2.4rem;
+    gap: 1.6rem;
+
+    /* Primary Colors/brand-green */
+
+    border: 1px solid var(--primary-color);
+    border-radius: 4rem;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    text-transform: uppercase;
+  }
+
+  nav#navegador.scroll .menu ul li a {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    /* identical to box height */
+
+    /* Primary Colors/brand-green-light-02 */
+
+    color: var(--bg-light);
+
+    opacity: 0.6;
+  }
+
+  nav#navegador.scroll .menu a.button {
+    /* Auto layout */
+    background-color: var(--primary-color);
+    color: #ffff;
+    border-color: white;
+  }
+
+  nav#navegador .menu li a {
+    transition: opacity 0.4ms;
+  }
+
+  nav#navegador .menu li a:hover {
+    opacity: 1;
+    font-weight: 700;
+  }
+  nav#navegador .menu li a:after {
+    content: '';
+    width: 0%;
+    height: 3px;
+    background-color: var(--primary-color);
+
+    position: relative;
+    bottom: -2rem;
+    left: -0.5rem;
+
+    display: block;
+
+    transition: width 0.3s;
+  }
+  nav#navegador.scroll .menu li a:after {
+    background-color: white;
+    height: 7px;
+  }
+  nav#navegador .menu li a:hover::after {
+    padding-inline: 0.8rem;
+    width: 100%;
+  }
+  nav#navegador.scroll .menu li a:hover::after {
+    padding-inline: 0.8rem;
+    width: 100%;
+  }
 }
