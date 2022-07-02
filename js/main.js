@@ -105,3 +105,22 @@ ScrollReveal({
   #about h4,
   #about h2,
   #about p`)
+
+// const value = getComputedStyle(document.documentElement).getPropertyValue(
+//   '--hue'
+// )
+// console.log(value)
+
+function corOriginal() {
+  document.documentElement.style.setProperty('--hue', 170)
+}
+
+function corVermelha() {
+  document.documentElement.style.setProperty('--hue', 5)
+}
+function corAzul() {
+  document.documentElement.style.setProperty('--hue', 250)
+}
+function corRoxo() {
+  document.documentElement.style.setProperty('--hue', 290)
+}

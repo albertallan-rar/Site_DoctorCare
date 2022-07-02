@@ -189,6 +189,25 @@ nav .menu,
 nav .close-menu {
   position: fixed;
 }
+
+nav .painel-trocar-cor button {
+  border-radius: 100%;
+  border: 1px solid red;
+  width: 2rem;
+  height: 2rem;
+}
+nav .painel-trocar-cor #original {
+  background: green;
+}
+nav .painel-trocar-cor #vermelho {
+  background: #850b00;
+}
+nav .painel-trocar-cor #azul {
+  background: #160085;
+}
+nav .painel-trocar-cor #roxo {
+  background: #6e0085;
+}
 /* =======================MENU-EXPANDED=============================*/
 .menu,
 .close-menu,
